@@ -32,4 +32,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            Debug.Log(other.gameObject.tag);
+            Destroy(other.gameObject);
+        }
+    }
 }

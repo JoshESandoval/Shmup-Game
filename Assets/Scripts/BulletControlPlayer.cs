@@ -21,12 +21,5 @@ public class BulletControlPlayer : MonoBehaviour
         } 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Enemy"))
-        {
-            Destroy(collision.collider);
-        }
-      
-    }
+ 
 }

@@ -52,6 +52,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 558534018130510498, guid: ada4caf1ec94719439f18a2462e139c0, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 558534018130510498, guid: ada4caf1ec94719439f18a2462e139c0, type: 3}
       propertyPath: m_Name
       value: SpawnerREnemy
       objectReference: {fileID: 0}

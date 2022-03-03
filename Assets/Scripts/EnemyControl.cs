@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyControl : MonoBehaviour
 {
     public float movementSpeed = 2,
-                 shootSpeed = 0.5f;
+                 shootSpeed =0,
+                 shootInterval = 0.9f;
     Rigidbody2D enemyRB;
-    GameObject enemyBullet;
-    GameObject[] GunsE;
+    public GameObject enemyBullet;
+    public GameObject[] GunsE;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +22,26 @@ public class EnemyControl : MonoBehaviour
     void Update()
     {
         shootSpeed += Time.deltaTime;
-        if(shootSpeed > Time.deltaTime)
+        if(shootSpeed > shootInterval)
         {
             foreach(GameObject x in GunsE)
             {
                 Instantiate(enemyBullet, x.transform.position, x.transform.rotation);
+                shootSpeed = 0;
             }
+        }
+        if(gameObject.transform.position.y < -6)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }

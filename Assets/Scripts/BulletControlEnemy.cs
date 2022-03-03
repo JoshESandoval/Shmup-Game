@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletControlEnemy : MonoBehaviour
 {
     Rigidbody2D bullet;
-    public float bulletSpeed = -2;
+    public float bulletSpeed = -0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,4 +29,6 @@ public class BulletControlEnemy : MonoBehaviour
         }
 
     }
+
+    
 }
