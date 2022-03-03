@@ -29,8 +29,12 @@ public class HealthManager : MonoBehaviour
     {
         for(int i = 0; i < currentHealth; i++)
         {
+            startPos.AddComponent<Image>();
             HealthBar[i] = Instantiate(HealthImage);
-            HealthBar[i].transform.position += new Vector3(0, offsetX,0);
+            Image temp = startPos.GetComponent<Image>();
+            temp = HealthBar[i];
         }
+        
+
     }
 }
