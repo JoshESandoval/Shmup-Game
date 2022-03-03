@@ -10,17 +10,22 @@ public class EnemyControl : MonoBehaviour
     Rigidbody2D enemyRB;
     public GameObject enemyBullet;
     public GameObject[] GunsE;
+    public HealthManager HealthManager;
     // Start is called before the first frame update
     void Start()
     {
-
+        HealthManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<HealthManager>();
         enemyRB = gameObject.GetComponent<Rigidbody2D>();
-        enemyRB.velocity = new Vector2(0, -movementSpeed);
+        enemyRB.velocity = new Vector2(Random.Range(-1.5f,1.5f), -movementSpeed);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (HealthManager.gameover)
+        {
+            Destroy(gameObject);
+        }
         shootSpeed += Time.deltaTime;
         if(shootSpeed > shootInterval)
         {
@@ -34,6 +39,7 @@ public class EnemyControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

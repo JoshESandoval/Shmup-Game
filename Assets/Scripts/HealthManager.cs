@@ -9,32 +9,62 @@ public class HealthManager : MonoBehaviour
                currentHealth = 0;
     public float offsetX;
     public GameObject startPos;
-    public Image HealthImage;
+    public GameObject HealthImage;
+    public bool gameover = false;
+    float deathScreen = 0;
 
-    public Image[] HealthBar;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        gameover = false;
         currentHealth = maxHealth;
-        renderHearts();
+        RenderHearts();
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void renderHearts()
-    {
-        for(int i = 0; i < currentHealth; i++)
+        if(currentHealth == 0)
         {
-            startPos.AddComponent<Image>();
-            HealthBar[i] = Instantiate(HealthImage);
-            Image temp = startPos.GetComponent<Image>();
-            temp = HealthBar[i];
+            gameover = true;
         }
-        
+
+        if (gameover)
+        {
+            deathScreen += Time.deltaTime;
+            if (Input.anyKey && deathScreen > 8)
+            {
+                gameover = false;
+            }
+        }
+
 
     }
+
+    public void RenderHearts()
+    {
+
+        for (int i = 0; i < currentHealth; i++)
+        {
+            GameObject heart = Instantiate(HealthImage);
+            heart.transform.SetParent(startPos.transform);
+            heart.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+    }
+
+    public void RemoveHearts() {
+        currentHealth--;
+
+        if (startPos.transform.childCount > 0 && !gameover)
+        {
+            int child = startPos.transform.childCount;
+            Destroy(startPos.transform.GetChild(child - 1).gameObject);
+        }
+    }
+
+
 }

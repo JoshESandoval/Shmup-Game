@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet;
     public GameObject[] Guns;
     float coolDown = 0;
-   
+
+    public HealthManager health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,16 +21,23 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coolDown += Time.deltaTime;
-        player.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, Input.GetAxis("Vertical") * movementSpeed) ;
-        if (Input.GetKey(KeyCode.Space))
+        if (!health.gameover)
         {
-            if (coolDown > 0.25)
+            coolDown += Time.deltaTime;
+            player.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, Input.GetAxis("Vertical") * movementSpeed);
+            if (Input.GetKey(KeyCode.Space))
             {
-                foreach (GameObject x in Guns)
-                    Instantiate(bullet, x.transform.position, x.transform.rotation);
-                coolDown = 0;    
+                if (coolDown > 0.25)
+                {
+                    foreach (GameObject x in Guns)
+                        Instantiate(bullet, x.transform.position, x.transform.rotation);
+                    coolDown = 0;
+                }
             }
+        }
+        if (health.gameover)
+        {
+            gameObject.transform.position = Vector3.zero;
         }
     }
 
@@ -36,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            Debug.Log(other.gameObject.tag);
+            health.RemoveHearts();
             Destroy(other.gameObject);
         }
     }
